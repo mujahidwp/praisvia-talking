@@ -1,0 +1,166 @@
+[
+ {
+  "seg": "hook_0",
+  "pose": "explain"
+ },
+ {
+  "seg": "hello_0",
+  "pose": "wave"
+ },
+ {
+  "seg": "plan_0",
+  "pose": "count"
+ },
+ {
+  "seg": "why_0",
+  "pose": "think"
+ },
+ {
+  "seg": "why2_0",
+  "pose": "explain"
+ },
+ {
+  "seg": "story_0",
+  "pose": "think"
+ },
+ {
+  "seg": "examples_0",
+  "pose": "explain"
+ },
+ {
+  "seg": "wporg_0",
+  "pose": "type"
+ },
+ {
+  "seg": "activate_0",
+  "pose": "type"
+ },
+ {
+  "seg": "menu_0",
+  "pose": "type"
+ },
+ {
+  "seg": "back1_0",
+  "pose": "laptop"
+ },
+ {
+  "seg": "formpage_0",
+  "pose": "type"
+ },
+ {
+  "seg": "formpage_1",
+  "pose": "type"
+ },
+ {
+  "seg": "formfill_0",
+  "pose": "type"
+ },
+ {
+  "seg": "share_0",
+  "pose": "count"
+ },
+ {
+  "seg": "great_0",
+  "pose": "think"
+ },
+ {
+  "seg": "templates_0",
+  "pose": "laptop"
+ },
+ {
+  "seg": "approve_0",
+  "pose": "type"
+ },
+ {
+  "seg": "approve_1",
+  "pose": "type"
+ },
+ {
+  "seg": "addmanual_0",
+  "pose": "type"
+ },
+ {
+  "seg": "back2_0",
+  "pose": "thumbs"
+ },
+ {
+  "seg": "wallpage_0",
+  "pose": "type"
+ },
+ {
+  "seg": "wallpage_1",
+  "pose": "type"
+ },
+ {
+  "seg": "wallfront_0",
+  "pose": "type"
+ },
+ {
+  "seg": "design_0",
+  "pose": "explain"
+ },
+ {
+  "seg": "summary_0",
+  "pose": "type"
+ },
+ {
+  "seg": "settings_0",
+  "pose": "type"
+ },
+ {
+  "seg": "settings_1",
+  "pose": "type"
+ },
+ {
+  "seg": "discussion_0",
+  "pose": "type"
+ },
+ {
+  "seg": "privacy_0",
+  "pose": "type"
+ },
+ {
+  "seg": "faq_0",
+  "pose": "explain"
+ },
+ {
+  "seg": "fixes_0",
+  "pose": "count"
+ },
+ {
+  "seg": "bonus_0",
+  "pose": "count"
+ },
+ {
+  "seg": "clients_0",
+  "pose": "you"
+ },
+ {
+  "seg": "mistakes_0",
+  "pose": "think"
+ },
+ {
+  "seg": "mistakes2_0",
+  "pose": "explain"
+ },
+ {
+  "seg": "recap_0",
+  "pose": "count"
+ },
+ {
+  "seg": "measure_0",
+  "pose": "laptop"
+ },
+ {
+  "seg": "checklist_0",
+  "pose": "count"
+ },
+ {
+  "seg": "outro_0",
+  "pose": "you"
+ },
+ {
+  "seg": "bye_0",
+  "pose": "wave"
+ }
+]

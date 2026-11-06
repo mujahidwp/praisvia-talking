@@ -1,0 +1,61 @@
+# Lip-synced presenter clips for the Praisvia tutorial, made with SadTalker (Apache-2.0) on free CPU runners.
+# jobs.json lists one entry per audio segment: {"seg": "hook_0", "pose": "explain"} -> audio/hook_0.wav + pose/explain.png.
+# Each entry renders on its own runner; results come back as one artifact per segment.
+name: lipsync
+on:
+  workflow_dispatch:
+    inputs:
+      only: { description: "Comma list of segs to render (empty = all in jobs.json)", default: "" }
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs: { matrix: "${{ steps.m.outputs.matrix }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - id: m
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          jobs = json.load(open("jobs.json"))
+          only = [s for s in os.environ.get("ONLY", "").split(",") if s]
+          if only: jobs = [j for j in jobs if j["seg"] in only]
+          print("matrix=" + json.dumps({"include": jobs}))
+          PY
+        env: { ONLY: "${{ inputs.only }}" }
+  render:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.10" }
+      - uses: actions/cache@v4
+        with: { path: ~/.cache/pip, key: pip-sadtalker-v1 }
+      - uses: actions/cache@v4
+        id: models
+        with: { path: models, key: sadtalker-models-v1 }
+      - name: Install
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          git clone --depth 1 https://github.com/OpenTalker/SadTalker.git sadtalker
+          pip install -q torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cpu
+          grep -v -i -E "^(gradio|torch)" sadtalker/requirements.txt > req.txt
+          pip install -q -r req.txt
+      - name: Models
+        run: |
+          if [ ! -d models/checkpoints ]; then (cd sadtalker && bash scripts/download_models.sh) && mkdir -p models && cp -r sadtalker/checkpoints sadtalker/gfpgan models/; fi
+          rm -rf sadtalker/checkpoints sadtalker/gfpgan && cp -r models/checkpoints models/gfpgan sadtalker/
+      - name: Render
+        run: |
+          cd sadtalker
+          python inference.py --driven_audio "../audio/${{ matrix.seg }}.wav" --source_image "../pose/${{ matrix.pose }}.png" \
+            --result_dir ../results --still --preprocess full --size 256 --cpu
+          f=$(find ../results -name "*.mp4" | head -1); mkdir -p ../out && cp "$f" "../out/${{ matrix.seg }}.mp4"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: "${{ matrix.seg }}", path: out/*.mp4, retention-days: 14, if-no-files-found: warn }
